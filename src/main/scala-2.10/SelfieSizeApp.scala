@@ -30,4 +30,25 @@ object SelfieSizeApp extends App {
 
   imwrite("target/canny_kelly.jpg", canny)
 
+
+
+  val mem: CvMemStorage = new CvMemStorage()
+  val contours: MatVector = new MatVector()
+
+  findContours(canny, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE)
+
+  val resultImage: Mat = new Mat(image)
+
+  var ptr : CvSeq = new CvSeq(contours)
+
+  for (i <- 0 until contours.sizeof()) {
+    val boundbox = boundingRect(contours.get(i))
+
+    rectangle( resultImage , new Point( boundbox.x(), boundbox.y() ),
+      new Point( boundbox.x() + boundbox.width(), boundbox.y() + boundbox.height()),
+      new Scalar( 0, 255, 0, 0 ), 1, 0, 0 )
+  }
+
+  imwrite("target/result_kelly.jpg", resultImage)
+
 }
