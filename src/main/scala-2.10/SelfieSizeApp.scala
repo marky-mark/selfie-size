@@ -1,22 +1,33 @@
 import org.bytedeco.javacpp.opencv_core._
+import org.bytedeco.javacpp.opencv_imgproc._
 import org.bytedeco.javacpp.opencv_highgui._
-import org.bytedeco.javacpp.opencv_objdetect._
 
 object SelfieSizeApp extends App {
-  //   Loader.load(classOf[org.bytedeco.javacpp.opencv_objdetect])
 
-  val cascadeClassifier: CascadeClassifier = new CascadeClassifier(getClass.getClassLoader.getResource("haarcascade_mcs_upperbody.xml").getPath)
+  val image: Mat = imread(getClass.getClassLoader.getResource("IMG_0668.JPG").getPath)
 
-  val image = imread(getClass.getClassLoader.getResource("rsz_img_0587.jpg").getPath)
+  val imageGrey: Mat = new Mat(image)
 
-  val rect : Rect = new Rect()
+  cvtColor(image, imageGrey, COLOR_RGB2GRAY)
 
-  cascadeClassifier.detectMultiScale(image, rect)
+  imwrite("target/gray_kelly.jpg", imageGrey)
 
-  println(rect.x, rect.y)
+  val eqHist: Mat = new Mat(imageGrey)
 
-  rectangle(image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255))
+  equalizeHist(imageGrey, eqHist)
 
-  imwrite("target/foo.jpg", image)
+  imwrite("target/hist_kelly.jpg", eqHist)
+
+  val gaussianBlur: Mat = new Mat(eqHist)
+
+  GaussianBlur(imageGrey, gaussianBlur, new Size(5,5), 0)
+
+  imwrite("target/blur_kelly.jpg", gaussianBlur)
+
+  val canny: Mat = new Mat(gaussianBlur)
+
+  Canny(gaussianBlur, canny, 35, 125)
+
+  imwrite("target/canny_kelly.jpg", canny)
 
 }
