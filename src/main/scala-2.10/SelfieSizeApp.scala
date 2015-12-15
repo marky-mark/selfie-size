@@ -1,6 +1,7 @@
 import org.bytedeco.javacpp.opencv_core._
 import org.bytedeco.javacpp.opencv_imgproc._
 import org.bytedeco.javacpp.opencv_highgui._
+import util.control.Breaks._
 
 object SelfieSizeApp extends App {
 
@@ -20,7 +21,7 @@ object SelfieSizeApp extends App {
 
   val gaussianBlur: Mat = new Mat(eqHist)
 
-  GaussianBlur(imageGrey, gaussianBlur, new Size(5,5), 0)
+  GaussianBlur(imageGrey, gaussianBlur, new Size(5, 5), 0)
 
   imwrite("target/blur_kelly.jpg", gaussianBlur)
 
@@ -30,23 +31,36 @@ object SelfieSizeApp extends App {
 
   imwrite("target/canny_kelly.jpg", canny)
 
-
-
-  val mem: CvMemStorage = new CvMemStorage()
-  val contours: MatVector = new MatVector()
-
-  findContours(canny, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE)
-
   val resultImage: Mat = new Mat(image)
 
-  var ptr : CvSeq = new CvSeq(contours)
+  val leftSide = scala.collection.mutable.MutableList[Point]()
 
-  for (i <- 0 until contours.sizeof()) {
-    val boundbox = boundingRect(contours.get(i))
+  //left side
+  for (j <- 575 until 680) {
+    breakable {
+      for (i <- 375 until 450) {
+        if (canny.col(i).row(j).data().get() == -1) {
+          leftSide += new Point(i, j)
+          circle(resultImage, new Point(i, j), 1, new Scalar(0, 0, 255, 0))
+          break
+        }
+      }
+    }
+  }
 
-    rectangle( resultImage , new Point( boundbox.x(), boundbox.y() ),
-      new Point( boundbox.x() + boundbox.width(), boundbox.y() + boundbox.height()),
-      new Scalar( 0, 255, 0, 0 ), 1, 0, 0 )
+  val rightSide = scala.collection.mutable.MutableList[Point]()
+
+  //right side
+  for (j <- 575 until 680) {
+    breakable {
+      for (i <- 650 to 575 by -1) {
+        if (canny.col(i).row(j).data().get() == -1) {
+          rightSide += new Point(i, j)
+          circle(resultImage, new Point(i, j), 1, new Scalar(0, 0, 255, 0))
+          break
+        }
+      }
+    }
   }
 
   imwrite("target/result_kelly.jpg", resultImage)
