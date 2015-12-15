@@ -1,6 +1,7 @@
 import org.bytedeco.javacpp.opencv_core._
 import org.bytedeco.javacpp.opencv_imgproc._
 import org.bytedeco.javacpp.opencv_highgui._
+import org.bytedeco.javacpp.opencv_objdetect.CascadeClassifier
 import util.control.Breaks._
 
 object SelfieSizeApp extends App {
@@ -77,6 +78,21 @@ object SelfieSizeApp extends App {
   line(resultImage, averageLeft, averageRight, new Scalar(255, 0, 0, 0))
 
   println("distance in pixels: " + (averageRight.x - averageLeft.x))
+
+
+  /////
+
+  val cascadeClassifier: CascadeClassifier = new CascadeClassifier(getClass.getClassLoader.getResource("haarcascade_frontalface_alt2.xml").getPath)
+
+  val rect : Rect = new Rect()
+
+  cascadeClassifier.detectMultiScale(image, rect)
+
+  println(rect.x, rect.y)
+
+  rectangle(resultImage, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255))
+
+  ////
 
   imwrite("target/result_kelly.jpg", resultImage)
 
