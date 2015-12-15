@@ -48,6 +48,12 @@ object SelfieSizeApp extends App {
     }
   }
 
+  val addedLeft : Point = leftSide.reduce((p1, p2) => new Point(p1.x + p2.x, p1.y + p2.y))
+
+  val averageLeft = new Point(addedLeft.x/leftSide.size, addedLeft.y/leftSide.size)
+
+  circle(resultImage, averageLeft, 5, new Scalar(0, 255, 0, 0))
+
   val rightSide = scala.collection.mutable.MutableList[Point]()
 
   //right side
@@ -62,6 +68,15 @@ object SelfieSizeApp extends App {
       }
     }
   }
+
+  val addedRight : Point = rightSide.reduce((p1, p2) => new Point(p1.x + p2.x, p1.y + p2.y))
+  val averageRight = new Point(addedRight.x/rightSide.size, addedRight.y/rightSide.size)
+
+  circle(resultImage, averageRight, 5, new Scalar(0, 255, 0, 0))
+
+  line(resultImage, averageLeft, averageRight, new Scalar(255, 0, 0, 0))
+
+  println("distance in pixels: " + (averageRight.x - averageLeft.x))
 
   imwrite("target/result_kelly.jpg", resultImage)
 
