@@ -23,6 +23,6 @@ object SelfieSizeApp extends App {
 
   println("neck size " + NeckSizeEstimation.findNeckSizeInInches(heightInches, faceRect, neckPoints) + " Inches")
 
-  imwrite("target/found_result* test .jpg", resultImage)
+  imwrite("target/found_result.jpg", resultImage)
 
 }
