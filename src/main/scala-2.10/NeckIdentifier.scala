@@ -15,7 +15,6 @@ object NeckIdentifier {
   def averageRightSide(canny: Mat): Point = {
     val rightSide = scala.collection.mutable.MutableList[Point]()
 
-    //right side
     for (j <- 575 until 680) {
       breakable {
         for (i <- 650 to 575 by -1) {
@@ -28,8 +27,7 @@ object NeckIdentifier {
     }
 
     val addedRight: Point = rightSide.reduce((p1, p2) => new Point(p1.x + p2.x, p1.y + p2.y))
-    val averageRight = new Point(addedRight.x / rightSide.size, addedRight.y / rightSide.size)
-    averageRight
+    new Point(addedRight.x / rightSide.size, addedRight.y / rightSide.size)
   }
 
   def averageLeftSide(canny: Mat): Point = {
@@ -48,9 +46,7 @@ object NeckIdentifier {
     }
 
     val addedLeft: Point = leftSide.reduce((p1, p2) => new Point(p1.x + p2.x, p1.y + p2.y))
-
-    val averageLeft = new Point(addedLeft.x / leftSide.size, addedLeft.y / leftSide.size)
-    averageLeft
+    new Point(addedLeft.x / leftSide.size, addedLeft.y / leftSide.size)
   }
 
   def prepareImage(image: Mat): Mat = {
