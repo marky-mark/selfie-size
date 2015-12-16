@@ -5,12 +5,13 @@ import scala.util.control.Breaks._
 
 object NeckIdentifier {
 
-  def findNeckAverage(image: Mat, headRect: Rect): (Point, Point, Point, Point) = {
+  def findNeckAverage(image: Mat, headRect: Rect): (Point, Point) = {
     val canny: Mat = prepareImage(image)
     val bl = new Point(headRect.tl.x, headRect.br.y)
     val leftSoldierHit = findShoulder(bl, canny)
     val rightSoldierHit = findShoulder(headRect.br, canny)
-    (averageLeftSide(canny), averageRightSide(canny), leftSoldierHit, rightSoldierHit)
+    (leftSideOfNeck(canny, bl, headRect.br, leftSoldierHit),
+      rightSideOfNeck(canny, bl, headRect.br, rightSoldierHit))
   }
 
   def findShoulder(bl: Point, image: Mat): Point = {
@@ -24,13 +25,13 @@ object NeckIdentifier {
     new Point(bl.x, image.size().height())
   }
 
-  def averageRightSide(canny: Mat): Point = {
+  def rightSideOfNeck(image: Mat, bl: Point, br: Point, rightShoulder: Point): Point = {
     val rightSide = scala.collection.mutable.MutableList[Point]()
 
-    for (j <- 575 until 680) {
+    for (j <- br.y until rightShoulder.y) {
       breakable {
-        for (i <- 650 to 575 by -1) {
-          if (canny.col(i).row(j).data().get() == -1) {
+        for (i <- br.x to (br.x + bl.x)/2  by -1) {
+          if (image.col(i).row(j).data().get() == -1) {
             rightSide += new Point(i, j)
             break
           }
@@ -38,17 +39,16 @@ object NeckIdentifier {
       }
     }
 
-    val addedRight: Point = rightSide.reduce((p1, p2) => new Point(p1.x + p2.x, p1.y + p2.y))
-    new Point(addedRight.x / rightSide.size, addedRight.y / rightSide.size)
+    rightSide.get(rightSide.size/2).get
   }
 
-  def averageLeftSide(canny: Mat): Point = {
+  def leftSideOfNeck(canny: Mat, bl: Point, br: Point, leftShoulder: Point): Point = {
 
     val leftSide = scala.collection.mutable.MutableList[Point]()
 
-    for (j <- 575 until 680) {
+    for (j <- bl.y until leftShoulder.y) {
       breakable {
-        for (i <- 375 until 450) {
+        for (i <- bl.x until (br.x + bl.x)/2) {
           if (canny.col(i).row(j).data().get() == -1) {
             leftSide += new Point(i, j)
             break
@@ -57,8 +57,7 @@ object NeckIdentifier {
       }
     }
 
-    val addedLeft: Point = leftSide.reduce((p1, p2) => new Point(p1.x + p2.x, p1.y + p2.y))
-    new Point(addedLeft.x / leftSide.size, addedLeft.y / leftSide.size)
+    leftSide.get(leftSide.size/2).get
   }
 
   def prepareImage(image: Mat): Mat = {

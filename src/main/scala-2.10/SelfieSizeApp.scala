@@ -18,15 +18,11 @@ object SelfieSizeApp extends App {
 
   circle(resultImage, averageNeck._1, 5, new Scalar(0, 255, 0, 0))
   circle(resultImage, averageNeck._2, 5, new Scalar(0, 255, 0, 0))
-  circle(resultImage, averageNeck._3, 5, new Scalar(0, 255, 0, 0))
-  circle(resultImage, averageNeck._4, 5, new Scalar(0, 255, 0, 0))
 
   line(resultImage, averageNeck._1, averageNeck._2, new Scalar(255, 0, 0, 0))
 
   println("point a: " + averageNeck._1.x + "," + averageNeck._1.y)
   println("point b: " + averageNeck._2.x + "," + averageNeck._2.y)
-  println("point c: " + averageNeck._3.x + "," + averageNeck._3.y)
-  println("point d: " + averageNeck._4.x + "," + averageNeck._4.y)
   println("distance in pixels: " + (averageNeck._2.x - averageNeck._1.x))
 
   imwrite("target/result_kelly.jpg", resultImage)
