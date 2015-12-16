@@ -3,10 +3,10 @@ import org.bytedeco.javacpp.opencv_highgui._
 
 object SelfieSizeApp extends App {
 
-  val image: Mat = imread(getClass.getClassLoader.getResource("IMG_3770.JPG").getPath)
+  val image: Mat = imread(getClass.getClassLoader.getResource("IMG_3767.JPG").getPath)
   imwrite("target/edge_result.jpg", NeckIdentifier.prepareImage(image))
 
-  val heightInches = 68.5
+  val heightInches = 72
   val headsInBody = 7.5
   val hackyPadding = 30 //face recognition only takes up a proportion of the head, add 30 at top and bottom to make up for it
 
@@ -42,9 +42,10 @@ object SelfieSizeApp extends App {
   val inchPerPx: Double = heightInches / (headsInBody * headHeightPx)
 
   val widthInches  = inchPerPx * neckWidthPx
-  val neckdepthInches  = widthInches * 3/4
+  val neckdepthInches  = widthInches * 0.80
 
-  println("neck size " + 2*CV_PI* Math.sqrt(((widthInches/2)*(widthInches/2) + (neckdepthInches/2)*(neckdepthInches/2))/2) + " Inches")
+  private val neckSizeInInches: Double = 2 * CV_PI * Math.sqrt(((widthInches / 2) * (widthInches / 2) + (neckdepthInches / 2) * (neckdepthInches / 2)) / 2)
+  println("neck size " + neckSizeInInches + " Inches")
 
   imwrite("target/found_result* test .jpg", resultImage)
 
