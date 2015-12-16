@@ -5,11 +5,23 @@ import scala.util.control.Breaks._
 
 object NeckIdentifier {
 
-  def findNeckAverage(image: Mat, headRect : Rect): (Point, Point) = {
-
+  def findNeckAverage(image: Mat, headRect: Rect): (Point, Point, Point, Point) = {
     val canny: Mat = prepareImage(image)
+    val bl = new Point(headRect.tl.x, headRect.br.y)
+    val leftSoldierHit = findShoulder(bl, canny)
+    val rightSoldierHit = findShoulder(headRect.br, canny)
+    (averageLeftSide(canny), averageRightSide(canny), leftSoldierHit, rightSoldierHit)
+  }
 
-    (averageLeftSide(canny), averageRightSide(canny))
+  def findShoulder(bl: Point, image: Mat): Point = {
+
+    for (j <- bl.y() until image.size().height()) {
+      if (image.col(bl.x).row(j).data().get() == -1) {
+        return new Point(bl.x, j)
+      }
+    }
+
+    new Point(bl.x, image.size().height())
   }
 
   def averageRightSide(canny: Mat): Point = {
