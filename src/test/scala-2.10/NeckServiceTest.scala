@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 class NeckServiceTest extends FunSuite {
 
   test("Should get Marks neck size") {
-    val image: Mat = imread(getClass.getClassLoader.getResource("mark2.JPG").getPath)
+    val image: Mat = imread(getClass.getClassLoader.getResource("mark.JPG").getPath)
     val neckSizeInches = NeckService.findSizeInInches(image, 71)
     println("Neck Size inches " + neckSizeInches)
     assert(neckSizeInches > 15)

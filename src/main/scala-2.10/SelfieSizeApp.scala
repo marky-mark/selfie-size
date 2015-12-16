@@ -3,10 +3,10 @@ import org.bytedeco.javacpp.opencv_highgui._
 
 object SelfieSizeApp extends App {
 
-  val image: Mat = imread(getClass.getClassLoader.getResource("john2.JPG").getPath)
+  val image: Mat = imread(getClass.getClassLoader.getResource("mark1.JPG").getPath)
   imwrite("target/edge_result.jpg", NeckIdentifier.prepareImage(image))
 
-  val heightInches = 72
+  val heightInches = 71
 
   val resultImage: Mat = new Mat()
   image.copyTo(resultImage)
