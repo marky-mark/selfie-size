@@ -48,7 +48,8 @@ libraryDependencies ++= Seq(
     ),
   "org.bytedeco.javacpp-presets" % "opencv"  % ("2.4.11-" + javacppVersion) classifier "",
   "org.bytedeco.javacpp-presets" % "opencv"  % ("2.4.11-" + javacppVersion) classifier platform,
-  "org.bytedeco"                 % "javacpp" % javacppVersion
+  "org.bytedeco"                 % "javacpp" % javacppVersion,
+  "org.scalatest" %% "scalatest" % "3.0.0-M10" % "test"
 )
 
 javaOptions += "-Xmx1G"
