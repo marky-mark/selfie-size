@@ -1,7 +1,7 @@
 import org.bytedeco.javacpp.opencv_core.{Mat, Rect}
 import org.bytedeco.javacpp.opencv_objdetect.CascadeClassifier
 
-object HeadIdentifier {
+object FaceIdentifier {
 
   def findHead(image: Mat): Rect = {
     val cascadeClassifier: CascadeClassifier = new CascadeClassifier(getClass.getClassLoader.getResource("haarcascade_frontalface_alt2.xml").getPath)
