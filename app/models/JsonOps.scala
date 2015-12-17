@@ -25,19 +25,19 @@ object JsonOps {
 
 
   implicit val readsSize: Reads[Size] = (
-    (__ \ "internationalSize").readNullable[String] and
-    (__ \ "waist").readNullable[Double] and
-    (__ \ "chestInch").readNullable[RangeSize] and
-    (__ \ "neckSizeInch").readNullable[RangeSize] and
-    (__ \ "manufacturer").readNullable[Int]
+    (__ \ "internationalSize").read[String] and
+    (__ \ "neckSizeInch").read[RangeSize] and
+    (__ \ "waist").read[Double] and
+    (__ \ "manufacturer").read[Int] and
+    (__ \ "chestInch").read[RangeSize]
   )(Size)
 
   implicit val writesSize: Writes[Size] = (
-    (__ \ "internationalSize").writeNullable[String] and
-    (__ \ "waist").writeNullable[Double] and
-    (__ \ "chestInch").writeNullable[RangeSize] and
-    (__ \ "neckSizeInch").writeNullable[RangeSize] and
-    (__ \ "manufacturer").writeNullable[Int]
+    (__ \ "internationalSize").write[String] and
+    (__ \ "neckSizeInch").write[RangeSize] and
+    (__ \ "waist").write[Double] and
+    (__ \ "manufacturer").write[Int] and
+    (__ \ "chestInch").write[RangeSize]
   )(unlift(Size.unapply))
          
 
@@ -45,10 +45,10 @@ object JsonOps {
 
 
   implicit val readsSizes: Reads[Sizes] =
-    (__ \ "values").readNullable[Seq[Size]].map(Sizes(_))
+    (__ \ "values").read[Seq[Size]].map(Sizes(_))
 
   implicit val writesSizes: Writes[Sizes] =
-    (__ \ "values").writeNullable[Seq[Size]].contramap(_.values)
+    (__ \ "values").write[Seq[Size]].contramap(_.values)
          
 
      

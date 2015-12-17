@@ -1,33 +1,33 @@
 package size
 
+import models.Sizes
 import org.scalatest.FunSuite
-import size.ZalandoSizeNormaliser.Size
 
 class ZalandoSizeNormaliserTest extends FunSuite {
 
   test("lowest") {
-    val size: List[Size] = ZalandoSizeNormaliser.getSize(14.5)
-    assert(size.size === 1)
-    assert(size.head.internationalSize === "XS")
+    val size: Sizes = ZalandoSizeNormaliser.getSize(14.5)
+    assert(size.values.length === 1)
+    assert(size.values.head.internationalSize === "XS")
   }
 
   test("middle") {
-    val size: List[Size] = ZalandoSizeNormaliser.getSize(15.4)
-    assert(size.size === 2)
-    assert(size.head.internationalSize === "M")
-    assert(size(1).internationalSize === "M/L")
+    val size: Sizes = ZalandoSizeNormaliser.getSize(15.4)
+    assert(size.values.length === 2)
+    assert(size.values.head.internationalSize === "M")
+    assert(size.values(1).internationalSize === "M/L")
   }
 
   test("high") {
-    val size: List[Size] = ZalandoSizeNormaliser.getSize(19)
-    assert(size.size === 1)
-    assert(size.head.internationalSize === "3XL")
+    val size: Sizes = ZalandoSizeNormaliser.getSize(19)
+    assert(size.values.length === 1)
+    assert(size.values.head.internationalSize === "3XL")
   }
 
   test("highest") {
-    val size: List[Size] = ZalandoSizeNormaliser.getSize(21)
-    assert(size.size === 1)
-    assert(size.head.internationalSize === "4XL")
+    val size: Sizes = ZalandoSizeNormaliser.getSize(21)
+    assert(size.values.length === 1)
+    assert(size.values.head.internationalSize === "4XL")
   }
 
 }

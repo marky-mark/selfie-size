@@ -11,16 +11,16 @@ case class RangeSize(
      
 
 case class Size(
-  internationalSize: Option[String] = None,
-  waist: Option[Double] = None,
-  chestInch: Option[RangeSize] = None,
-  neckSizeInch: Option[RangeSize] = None,
-  manufacturer: Option[Int] = None
+  internationalSize: String,
+  neckSizeInch: RangeSize,
+  waist: Double,
+  manufacturer: Int,
+  chestInch: RangeSize
 )
      
 
 case class Sizes(
-  values: Option[Seq[Size]] = None
+  values: Seq[Size]
 )
      
          

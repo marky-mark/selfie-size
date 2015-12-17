@@ -49,6 +49,7 @@ definitions:
   Sizes:
     type: object
     description: Sizes of person in image
+    required: ["values"]
     properties:
       values:
         type: array
@@ -57,6 +58,7 @@ definitions:
 
   Size:
     type: object
+    required: ["neckSizeInch", "internationalSize", "manufacturer", "chestInch", "waist"]
     properties:
       neckSizeInch:
         type: object
