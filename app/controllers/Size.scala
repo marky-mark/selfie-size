@@ -8,16 +8,12 @@ import java.io.File
 
 import cv.NeckIdentifier.CannotFindNeckException
 import cv.NeckService
-import org.bytedeco.javacpp.opencv_core.Mat
 import org.bytedeco.javacpp.opencv_highgui._
 import play.api._
-import play.api.libs.iteratee.Error
 import models._
 import models.JsonOps._
 import play.api.mvc._
 import play.api.libs.json.Json
-
-import com.google.inject.Inject
 
 import models._
 import models.JsonOps._
