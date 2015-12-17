@@ -1,5 +1,5 @@
 
-GET 	/api/size 	controllers.Size.list()
+POST 	/api/size 	controllers.Size.list()
 
 GET   /health   controllers.HealthCheck.ping() 
 

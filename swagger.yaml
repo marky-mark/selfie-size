@@ -13,7 +13,7 @@ produces:
 paths:
 
   /size:
-    get:
+    post:
       summary: Upload the raw data and information to get size
       parameters:
         - name: Authorization
