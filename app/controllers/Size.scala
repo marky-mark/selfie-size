@@ -6,6 +6,7 @@ package controllers
 
 import java.io.File
 
+import cv.NeckIdentifier.CannotFindNeckException
 import cv.NeckService
 import org.bytedeco.javacpp.opencv_core.Mat
 import org.bytedeco.javacpp.opencv_highgui._
@@ -34,8 +35,12 @@ class Size extends Controller {
     file.ref.moveTo(new File(s"/tmp/file/$filename"))
 
     val mat = imread(s"/tmp/file/$filename")
-    val result = NeckService.findSizeInInches(mat, height.toDouble)
-    Ok(Json.toJson(ZalandoSizeNormaliser.getSize(result)))
+    try {
+      val result = NeckService.findSizeInInches(mat, height.toDouble)
+      Ok(Json.toJson(ZalandoSizeNormaliser.getSize(result)))
+    } catch {
+      case e : CannotFindNeckException => NotFound
+    }
   }
 
 }

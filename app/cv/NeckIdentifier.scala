@@ -41,7 +41,7 @@ object NeckIdentifier {
       }
     }
 
-    rightSide.get(rightSide.size/2).get
+    rightSide.get(rightSide.size/2).getOrElse(throw new CannotFindNeckException)
   }
 
   def leftSideOfNeck(canny: Mat, bl: Point, br: Point, leftShoulder: Point): Point = {
@@ -59,7 +59,7 @@ object NeckIdentifier {
       }
     }
 
-    leftSide.get(leftSide.size/2).get
+    leftSide.get(leftSide.size/2).getOrElse(throw new CannotFindNeckException)
   }
 
   def prepareImage(image: Mat): Mat = {
@@ -80,4 +80,7 @@ object NeckIdentifier {
     Canny(gaussianBlur, canny, 35, 125)
     canny
   }
+
+  class CannotFindNeckException extends RuntimeException
+
 }
