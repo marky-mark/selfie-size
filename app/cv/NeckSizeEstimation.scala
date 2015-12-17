@@ -1,3 +1,5 @@
+package cv
+
 import org.bytedeco.javacpp.opencv_core.{Point, Rect, _}
 
 object NeckSizeEstimation {

@@ -1,3 +1,5 @@
+package cv
+
 import org.bytedeco.javacpp.opencv_core.Mat
 import org.bytedeco.javacpp.opencv_highgui._
 import org.scalatest.FunSuite

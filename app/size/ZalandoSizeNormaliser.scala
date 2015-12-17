@@ -1,3 +1,5 @@
+package size
+
 object ZalandoSizeNormaliser {
 
   case class Size(neckSizeInch: (Option[Double], Option[Double]), internationalSize: String, manufacturer: Int, chestInch: (Double, Double), waist: Double)

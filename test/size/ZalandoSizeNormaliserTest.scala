@@ -1,5 +1,7 @@
-import ZalandoSizeNormaliser.Size
+package size
+
 import org.scalatest.FunSuite
+import size.ZalandoSizeNormaliser.Size
 
 class ZalandoSizeNormaliserTest extends FunSuite {
 

@@ -1,3 +1,5 @@
+package cv
+
 import org.bytedeco.javacpp.opencv_core._
 import org.bytedeco.javacpp.opencv_imgproc._
 

@@ -14,6 +14,8 @@ scalacOptions ++= Seq(
   "-Ywarn-dead-code"  // Warn when dead code is identified.
 )
 
+lazy val root = (project in file(".")).enablePlugins(PlayScala,DockerPlugin)
+
 val javacvVersion = "0.11"
 
 val javacppVersion = "0.11"
@@ -59,7 +61,24 @@ libraryDependencies ++= Seq(
   "org.bytedeco.javacpp-presets" % "opencv"  % ("2.4.11-" + javacppVersion) classifier "",
   "org.bytedeco.javacpp-presets" % "opencv"  % ("2.4.11-" + javacppVersion) classifier platform,
   "org.bytedeco"                 % "javacpp" % javacppVersion,
-  "org.scalatest" %% "scalatest" % "3.0.0-M10" % "test"
+  jdbc,
+  cache,
+  ws,
+  "org.scalaz" %% "scalaz-core" % "7.1.3",
+  "org.webjars" % "swagger-ui" % "2.1.8-M1",
+  "org.scalatest" %% "scalatest" % "2.2.4" % Test,
+  "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % Test,
+  "org.scalatestplus" %% "play" % "1.4.0-M3" % Test
 )
 
 javaOptions += "-Xmx1G"
+
+resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
+
+// Play provides two styles of routers, one expects its actions to be injected, the
+// other, legacy style, accesses its actions statically.
+routesGenerator := InjectedRoutesGenerator
+
+routesImport := Seq(
+  "binders._"
+)

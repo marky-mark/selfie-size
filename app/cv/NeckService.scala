@@ -1,3 +1,5 @@
+package cv
+
 import org.bytedeco.javacpp.opencv_core.{Mat, Point, Rect}
 
 object NeckService {
