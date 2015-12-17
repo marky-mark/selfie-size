@@ -1,0 +1,93 @@
+swagger: '2.0'
+info:
+  title: Selfie Size Service
+  version: '0.1'
+basePath: /api
+schemes:
+  - https
+security:
+  - oauth2: [uid]
+produces:
+  - application/json
+
+paths:
+
+  /size:
+    get:
+      summary: Upload the raw data and information to get size
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+        - name: height
+          in: formData
+          required: true
+          description: height in Inches
+        - name: file,
+          in: formData,
+          description: file to upload,
+          required: true,
+          type: file
+      consumes:
+        - multipart/form-data
+
+      responses:
+        202:
+          description:
+          schema:
+            $ref: '#/definitions/Sizes'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Could not find size
+
+definitions:
+
+  Sizes:
+    type: object
+    description: Sizes of person in image
+    properties:
+      values:
+        type: array
+        items:
+          $ref: '#/definitions/Size'
+
+  Size:
+    type: object
+    properties:
+      neckSizeInch:
+        type: object
+        $ref: '#/definitions/RangeSize'
+      internationalSize:
+        type: string
+      manufacturer:
+        type: integer
+        format: int32
+      chestInch:
+        type: object
+        $ref: '#/definitions/RangeSize'
+      waist:
+        type: number
+        format: double
+
+  RangeSize:
+    type: object
+    properties:
+      small:
+        type: number
+        format: double
+      large:
+        type: number
+        format: double
+
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    flow: implicit
+    authorizationUrl: https://example.com/oauth2/dialog
+    x-tokenInfoUrl: "{{ tokeninfo_url if tokeninfo_url }}"
+    scopes:
+      uid: Unique identifier of the user accessing the service.
