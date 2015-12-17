@@ -1,5 +1,4 @@
-import org.bytedeco.javacpp.opencv_core.{Point, Rect}
-import org.bytedeco.javacpp.opencv_core._
+import org.bytedeco.javacpp.opencv_core.{Point, Rect, _}
 
 object NeckSizeEstimation {
 

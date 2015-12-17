@@ -2,7 +2,17 @@ name := "selfie-size"
 
 version := "1.0"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.7"
+
+scalacOptions ++= Seq(
+  "-deprecation",     // Emit warning and location for usages of deprecated APIs.
+  "-feature",         // Emit warning and location for usages of features that should be imported explicitly.
+  "-unchecked",       // Enable additional warnings where generated code depends on assumptions.
+  "-Xfatal-warnings", // Fail the compilation if there are any warnings.
+  "-Xlint",           // Enable recommended additional warnings.
+  "-Xcheckinit",
+  "-Ywarn-dead-code"  // Warn when dead code is identified.
+)
 
 val javacvVersion = "0.11"
 

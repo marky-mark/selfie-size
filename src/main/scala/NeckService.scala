@@ -1,4 +1,4 @@
-import org.bytedeco.javacpp.opencv_core.{Point, Rect, Mat}
+import org.bytedeco.javacpp.opencv_core.{Mat, Point, Rect}
 
 object NeckService {
 
