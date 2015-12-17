@@ -27,7 +27,13 @@ class Size extends Controller {
   def list() = Action(parse.multipartFormData) { implicit request =>
     val file = request.body.file("file").get
     val height: String = request.body.dataParts("height").head
-    val mat = imread(file.filename)
+
+    import java.io.File
+    val filename = file.filename
+    val contentType = file.contentType
+    file.ref.moveTo(new File(s"/tmp/file/$filename"))
+
+    val mat = imread(s"/tmp/file/$filename")
     val result = NeckService.findSizeInInches(mat, height.toDouble)
     Ok(Json.toJson(ZalandoSizeNormaliser.getSize(result)))
   }

@@ -5,7 +5,7 @@
     "version" : "0.1"
   },
   "basePath" : "/api",
-  "schemes" : [ "https" ],
+  "schemes" : [ "http" ],
   "security" : [ {
     "oauth2" : [ "uid" ]
   } ],
@@ -22,13 +22,14 @@
         }, {
           "name" : "height",
           "in" : "formData",
+          "type" : "string",
           "required" : true,
           "description" : "height in Inches"
         }, {
-          "name" : "file,",
-          "in" : "formData,",
-          "description" : "file to upload,",
-          "required" : "true,",
+          "name" : "file",
+          "in" : "formData",
+          "description" : "file to upload",
+          "required" : "true",
           "type" : "file"
         } ],
         "consumes" : [ "multipart/form-data" ],

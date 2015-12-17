@@ -21,13 +21,14 @@ paths:
           type: string
           required: true
         - name: height
+          type: string
           in: formData
           required: true
           description: height in Inches
         - name: file,
-          in: formData,
-          description: file to upload,
-          required: true,
+          in: formData
+          description: file to upload
+          required: true
           type: file
       consumes:
         - multipart/form-data
